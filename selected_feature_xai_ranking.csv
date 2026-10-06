@@ -1,27 +1,27 @@
 Feature,Selected,Selection Status,Mean |SHAP|,Spearman Correlation,Morphology Category,Direction & Clinical Meaning,Feature Rank
-worst perimeter,1,Selected (Stage 2 Final Elite),2.1474,0.7936,Size / Gigantism,Positive (High values strongly increase malignancy risk / nuclear enlargement),1
-worst texture,1,Selected (Stage 2 Final Elite),1.038,0.4824,Chromatin / Texture,Positive (High chromatin coarseness increases malignancy risk),2
-mean concave points,1,Selected (Stage 2 Final Elite),1.009,0.7769,Contour / Membrane Notching,Positive (High values strongly increase malignancy risk / nuclear membrane indentations),3
-area error,1,Selected (Stage 2 Final Elite),0.6055,0.7053,Size / Gigantism,Positive (Extreme variance in nuclear area indicates aggressive cell division),4
-worst smoothness,1,Selected (Stage 2 Final Elite),0.3491,0.434,Membrane Roughness,Positive (Coarser nuclear membrane surfaces elevate malignancy probability),5
-worst symmetry,1,Selected (Stage 2 Final Elite),0.2385,0.4057,Symmetry / Mitosis,Positive (Asymmetrical cellular structures elevate malignancy probability),6
-concavity error,1,Selected (Stage 2 Final Elite),0.0762,0.4641,Contour / Membrane Notching,Positive (High variability in indentation severity indicates malignancy),7
-concave points error,1,Selected (Stage 2 Final Elite),0.062,0.4811,Contour / Membrane Notching,Positive (High variation in indentations correlates with tumor growth),8
-worst radius,0,Pruned in Stage 1 (|r|>=0.85 collinear with worst perimeter),,0.7859,Size / Gigantism,Pruned as mathematical duplicate of 'worst perimeter',9
-worst area,0,Pruned in Stage 1 (|r|>=0.85 collinear with worst perimeter),,0.7846,Size / Gigantism,Pruned as mathematical duplicate of 'worst perimeter',10
-worst concave points,0,Pruned in Stage 1 (|r|>=0.85 collinear with mean concave points),,0.7754,Contour / Membrane Notching,Pruned as mathematical duplicate of 'mean concave points',11
-mean perimeter,0,Pruned in Stage 1 (|r|>=0.85 collinear with worst perimeter),,0.7469,Size / Gigantism,Pruned as mathematical duplicate of 'worst perimeter',12
-mean area,0,Pruned in Stage 1 (|r|>=0.85 collinear with worst perimeter),,0.7328,Size / Gigantism,Pruned as mathematical duplicate of 'worst perimeter',13
-mean radius,0,Pruned in Stage 1 (|r|>=0.85 collinear with worst perimeter),,0.732,Size / Gigantism,Pruned as mathematical duplicate of 'worst perimeter',14
-mean concavity,0,Pruned in Stage 1 (|r|>=0.85 collinear with mean concave points),,0.7252,Contour / Membrane Notching,Pruned as mathematical duplicate of 'mean concave points',15
-worst concavity,0,Pruned in Stage 1 (|r|>=0.85 collinear with mean concave points),,0.6962,Contour / Membrane Notching,Pruned as mathematical duplicate of 'mean concave points',16
-perimeter error,0,Pruned in Stage 1 (|r|>=0.85 collinear with area error),,0.6224,Size / Gigantism,Pruned as mathematical duplicate of 'area error',17
-mean compactness,0,Pruned in Stage 1 (|r|>=0.85 collinear with mean concave points),,0.6194,Contour / Membrane Notching,Pruned as mathematical duplicate of 'mean concave points',18
-radius error,0,Pruned in Stage 1 (|r|>=0.85 collinear with area error),,0.6132,Size / Gigantism,Pruned as mathematical duplicate of 'area error',19
-worst compactness,0,Pruned in Stage 1 (|r|>=0.85 collinear with mean concave points),,0.6058,Contour / Membrane Notching,Pruned as mathematical duplicate of 'mean concave points',20
-mean texture,0,Pruned in Stage 1 (|r|>=0.85 collinear with worst texture),,0.4539,Chromatin / Texture,Pruned as mathematical duplicate of 'worst texture',21
+worst perimeter,1,Selected (Stage 2 Final Elite),2.0306,0.7936,Size / Gigantism,Positive (High values strongly increase malignancy risk / nuclear enlargement),1
+mean concave points,1,Selected (Stage 2 Final Elite),1.1192,0.7769,Contour / Membrane Notching,Positive (High values strongly increase malignancy risk / nuclear membrane indentations),2
+worst texture,1,Selected (Stage 2 Final Elite),1.0227,0.4824,Chromatin / Texture,Positive (High chromatin coarseness increases malignancy risk),3
+area error,1,Selected (Stage 2 Final Elite),0.6704,0.7053,Size / Gigantism,Positive (Extreme variance in nuclear area indicates aggressive cell division),4
+worst smoothness,1,Selected (Stage 2 Final Elite),0.365,0.434,Membrane Roughness,Positive (Coarser nuclear membrane surfaces elevate malignancy probability),5
+worst symmetry,1,Selected (Stage 2 Final Elite),0.1985,0.4057,Symmetry / Mitosis,Positive (Asymmetrical cellular structures elevate malignancy probability),6
+concavity error,1,Selected (Stage 2 Final Elite),0.0668,0.4641,Contour / Membrane Notching,Positive (High variability in indentation severity indicates malignancy),7
+concave points error,1,Selected (Stage 2 Final Elite),0.0503,0.4811,Contour / Membrane Notching,Positive (High variation in indentations correlates with tumor growth),8
+worst radius,0,Pruned in Stage 1 (|r|>=0.85 collinear),,0.7859,Size / Gigantism,Pruned as mathematical duplicate,9
+worst area,0,Pruned in Stage 1 (|r|>=0.85 collinear),,0.7846,Size / Gigantism,Pruned as mathematical duplicate,10
+worst concave points,0,Pruned in Stage 1 (|r|>=0.85 collinear),,0.7754,Contour / Membrane Notching,Pruned as mathematical duplicate,11
+mean perimeter,0,Pruned in Stage 1 (|r|>=0.85 collinear),,0.7469,Size / Gigantism,Pruned as mathematical duplicate,12
+mean area,0,Pruned in Stage 1 (|r|>=0.85 collinear),,0.7328,Size / Gigantism,Pruned as mathematical duplicate,13
+mean radius,0,Pruned in Stage 1 (|r|>=0.85 collinear),,0.732,Size / Gigantism,Pruned as mathematical duplicate,14
+mean concavity,0,Pruned in Stage 1 (|r|>=0.85 collinear),,0.7252,Contour / Membrane Notching,Pruned as mathematical duplicate,15
+worst concavity,0,Pruned in Stage 1 (|r|>=0.85 collinear),,0.6962,Contour / Membrane Notching,Pruned as mathematical duplicate,16
+perimeter error,0,Pruned in Stage 1 (|r|>=0.85 collinear),,0.6224,Size / Gigantism,Pruned as mathematical duplicate,17
+mean compactness,0,Pruned in Stage 1 (|r|>=0.85 collinear),,0.6194,Contour / Membrane Notching,Pruned as mathematical duplicate,18
+radius error,0,Pruned in Stage 1 (|r|>=0.85 collinear),,0.6132,Size / Gigantism,Pruned as mathematical duplicate,19
+worst compactness,0,Pruned in Stage 1 (|r|>=0.85 collinear),,0.6058,Contour / Membrane Notching,Pruned as mathematical duplicate,20
+mean texture,0,Pruned in Stage 1 (|r|>=0.85 collinear),,0.4539,Chromatin / Texture,Pruned as mathematical duplicate,21
 mean smoothness,0,Pruned in Stage 2 (RFECV Redundancy),,0.4061,Membrane Roughness,"Retained in Stage 1, pruned as non-essential in Stage 2 RFECV",22
-compactness error,0,Pruned in Stage 1 (|r|>=0.85 collinear with concavity error),,0.3668,Contour / Membrane Notching,Pruned as mathematical duplicate of 'concavity error',23
+compactness error,0,Pruned in Stage 1 (|r|>=0.85 collinear),,0.3668,Contour / Membrane Notching,Pruned as mathematical duplicate,23
 mean symmetry,0,Pruned in Stage 2 (RFECV Redundancy),,0.3385,Symmetry / Mitosis,"Retained in Stage 1, pruned as non-essential in Stage 2 RFECV",24
 worst fractal dimension,0,Pruned in Stage 2 (RFECV Redundancy),,0.3218,Border Irregularity,"Retained in Stage 1, pruned as non-essential in Stage 2 RFECV",25
 fractal dimension error,0,Pruned in Stage 2 (RFECV Redundancy),,0.2035,Border Irregularity,"Retained in Stage 1, pruned as non-essential in Stage 2 RFECV",26

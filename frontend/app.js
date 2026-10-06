@@ -71,29 +71,167 @@ document.addEventListener("DOMContentLoaded", function () {
   // =========================================================================
 
   function initSignalCharts() {
-    // Class Distribution Donut
-    const ctxClass = document.getElementById("chart-class-dist");
-    if (ctxClass && typeof Chart !== "undefined") {
-      new Chart(ctxClass, {
-        type: "doughnut",
-        data: {
-          labels: ["Benign (72)", "Malignant (42)"],
-          datasets: [{
-            data: [72, 42],
-            backgroundColor: ["#385E48", "#821E2C"],
-            borderWidth: 1,
-            borderColor: "#FFFFFF"
-          }]
-        },
-        options: {
-          responsive: true,
-          maintainAspectRatio: false,
-          plugins: {
-            legend: { position: "bottom", labels: { boxWidth: 12, font: { size: 11 } } }
+    // 1. Training Split Graph (Volume, Balance, or Donut)
+    const ctxSplit = document.getElementById("chart-split-graph");
+    let splitChart = null;
+    let splitMode = "volume";
+
+    function renderSplitChart() {
+      if (!ctxSplit || typeof Chart === "undefined") return;
+      if (splitChart) splitChart.destroy();
+
+      const sp = data.splits || {
+        train_total: 455, train_benign: 285, train_malignant: 170,
+        holdout_total: 114, holdout_benign: 72, holdout_malignant: 42
+      };
+
+      if (splitMode === "volume") {
+        splitChart = new Chart(ctxSplit, {
+          type: "bar",
+          data: {
+            labels: ["Train Set (80%)", "Holdout Test (20%)"],
+            datasets: [
+              {
+                label: "Benign (0)",
+                data: [sp.train_benign, sp.holdout_benign],
+                backgroundColor: "#385E48",
+                borderRadius: 2
+              },
+              {
+                label: "Malignant (1)",
+                data: [sp.train_malignant, sp.holdout_malignant],
+                backgroundColor: "#821E2C",
+                borderRadius: 2
+              }
+            ]
           },
-          cutout: "68%"
-        }
+          options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            scales: {
+              x: { stacked: true, ticks: { font: { size: 11 } } },
+              y: { stacked: true, title: { display: true, text: "Patient Biopsies", font: { size: 10 } } }
+            },
+            plugins: {
+              legend: { position: "top", labels: { boxWidth: 10, font: { size: 11 } } }
+            }
+          }
+        });
+      } else if (splitMode === "classes") {
+        splitChart = new Chart(ctxSplit, {
+          type: "bar",
+          data: {
+            labels: ["Train Partition (N=455)", "Holdout Partition (N=114)"],
+            datasets: [
+              {
+                label: "Benign %",
+                data: [62.64, 63.16],
+                backgroundColor: "#385E48",
+                borderRadius: 2
+              },
+              {
+                label: "Malignant %",
+                data: [37.36, 36.84],
+                backgroundColor: "#821E2C",
+                borderRadius: 2
+              }
+            ]
+          },
+          options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            scales: {
+              x: { ticks: { font: { size: 11 } } },
+              y: { min: 0, max: 100, title: { display: true, text: "Prevalence Percentage (%)", font: { size: 10 } } }
+            },
+            plugins: {
+              legend: { position: "top", labels: { boxWidth: 10, font: { size: 11 } } }
+            }
+          }
+        });
+      } else if (splitMode === "donut") {
+        splitChart = new Chart(ctxSplit, {
+          type: "doughnut",
+          data: {
+            labels: ["Benign (72)", "Malignant (42)"],
+            datasets: [{
+              data: [sp.holdout_benign, sp.holdout_malignant],
+              backgroundColor: ["#385E48", "#821E2C"],
+              borderWidth: 1,
+              borderColor: "#FFFFFF"
+            }]
+          },
+          options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+              legend: { position: "bottom", labels: { boxWidth: 12, font: { size: 11 } } }
+            },
+            cutout: "65%"
+          }
+        });
+      }
+    }
+
+    const splitBtns = document.querySelectorAll("#split-chart-switcher .btn-filter");
+    splitBtns.forEach(btn => {
+      btn.addEventListener("click", () => {
+        splitBtns.forEach(b => b.classList.remove("active"));
+        btn.classList.add("active");
+        if (btn.id === "btn-split-volume") splitMode = "volume";
+        else if (btn.id === "btn-split-classes") splitMode = "classes";
+        else if (btn.id === "btn-split-donut") splitMode = "donut";
+        renderSplitChart();
       });
+    });
+
+    renderSplitChart();
+
+    // 2. Interactive Confusion Matrix Switcher
+    const btnCmCal = document.getElementById("btn-cm-calibrated");
+    const btnCmDef = document.getElementById("btn-cm-default");
+    const cmSubtitle = document.getElementById("cm-subtitle");
+
+    function setConfusionMatrixView(isCalibrated) {
+      const cms = data.confusion_matrices || {
+        default: { threshold: 0.50, tp: 39, tn: 71, fp: 1, fn: 3, recall: 92.86, specificity: 98.61, precision: 97.50, f2: 0.9375 },
+        calibrated: { threshold: 0.3786, tp: 41, tn: 70, fp: 2, fn: 1, recall: 97.62, specificity: 97.22, precision: 95.35, f2: 0.9716 }
+      };
+
+      const m = isCalibrated ? cms.calibrated : cms.default;
+
+      document.getElementById("cm-tn-val").textContent = m.tn;
+      document.getElementById("cm-tn-pct").textContent = `${m.specificity.toFixed(1)}% Specificity`;
+
+      document.getElementById("cm-fp-val").textContent = m.fp;
+      document.getElementById("cm-fp-pct").textContent = `${(100 - m.specificity).toFixed(1)}% Overcall`;
+
+      document.getElementById("cm-fn-val").textContent = m.fn;
+      document.getElementById("cm-fn-pct").textContent = isCalibrated ? "Critical Miss (PT-073)" : "3 Critical Misses (PT-073, PT-385, PT-205)";
+
+      document.getElementById("cm-tp-val").textContent = m.tp;
+      document.getElementById("cm-tp-pct").textContent = `${m.recall.toFixed(1)}% Sensitivity`;
+
+      document.getElementById("cm-bar-recall").textContent = `${m.recall.toFixed(2)}%`;
+      document.getElementById("cm-bar-spec").textContent = `${m.specificity.toFixed(2)}%`;
+      document.getElementById("cm-bar-prec").textContent = `${m.precision.toFixed(2)}%`;
+      document.getElementById("cm-bar-f2").textContent = m.f2.toFixed(4);
+
+      if (isCalibrated) {
+        cmSubtitle.textContent = "Calibrated Cutoff (0.3786) — 41/42 cancers caught (1 Missed)";
+        btnCmCal.classList.add("active");
+        btnCmDef.classList.remove("active");
+      } else {
+        cmSubtitle.textContent = "Default Cutoff (0.5000) — Standard boundary (3 Missed Cancers)";
+        btnCmDef.classList.add("active");
+        btnCmCal.classList.remove("active");
+      }
+    }
+
+    if (btnCmCal && btnCmDef) {
+      btnCmCal.addEventListener("click", () => setConfusionMatrixView(true));
+      btnCmDef.addEventListener("click", () => setConfusionMatrixView(false));
+      setConfusionMatrixView(true);
     }
 
     // Model Performance CV Comparison
@@ -346,6 +484,132 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 
     updateModelChart("CV ROC-AUC");
+
+    // Validation Loss & Learning Curve Chart
+    const ctxLoss = document.getElementById("chart-val-loss");
+    let lossChart = null;
+    let lossMode = "boosting";
+
+    function renderLossChart() {
+      if (!ctxLoss || typeof Chart === "undefined") return;
+      if (lossChart) lossChart.destroy();
+
+      const vlData = data.validation_loss || {
+        boosting_loss: [
+          { iteration: 1, train_loss: 0.5948, val_loss: 0.5983 },
+          { iteration: 10, train_loss: 0.2815, val_loss: 0.3164 },
+          { iteration: 30, train_loss: 0.0949, val_loss: 0.1402 },
+          { iteration: 60, train_loss: 0.0394, val_loss: 0.0961 }
+        ],
+        learning_curve: [
+          { train_samples: 68, train_loss: 0.0826, val_loss: 0.2143 },
+          { train_samples: 233, train_loss: 0.0664, val_loss: 0.1068 },
+          { train_samples: 455, train_loss: 0.0572, val_loss: 0.0925 }
+        ]
+      };
+
+      if (lossMode === "boosting") {
+        const labels = vlData.boosting_loss.map(b => `Round ${b.iteration}`);
+        const tLoss = vlData.boosting_loss.map(b => b.train_loss);
+        const vLoss = vlData.boosting_loss.map(b => b.val_loss);
+
+        lossChart = new Chart(ctxLoss, {
+          type: "line",
+          data: {
+            labels: labels,
+            datasets: [
+              {
+                label: "Training Log-Loss",
+                data: tLoss,
+                borderColor: "#4E6142",
+                backgroundColor: "rgba(78, 97, 66, 0.08)",
+                fill: true,
+                tension: 0.3,
+                borderWidth: 2,
+                pointRadius: 3
+              },
+              {
+                label: "Validation Log-Loss (Holdout Test)",
+                data: vLoss,
+                borderColor: "#BC522B",
+                backgroundColor: "transparent",
+                borderDash: [5, 4],
+                tension: 0.3,
+                borderWidth: 2,
+                pointRadius: 3
+              }
+            ]
+          },
+          options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            scales: {
+              x: { ticks: { font: { size: 10 } } },
+              y: { title: { display: true, text: "Cross-Entropy Loss (Log-Loss)", font: { size: 10 } } }
+            },
+            plugins: {
+              legend: { position: "top", labels: { boxWidth: 12, font: { size: 11 } } }
+            }
+          }
+        });
+      } else {
+        const labels = vlData.learning_curve.map(c => `N=${c.train_samples}`);
+        const tLoss = vlData.learning_curve.map(c => c.train_loss);
+        const vLoss = vlData.learning_curve.map(c => c.val_loss);
+
+        lossChart = new Chart(ctxLoss, {
+          type: "line",
+          data: {
+            labels: labels,
+            datasets: [
+              {
+                label: "Training Score (CV)",
+                data: tLoss,
+                borderColor: "#4E6142",
+                backgroundColor: "rgba(78, 97, 66, 0.08)",
+                fill: true,
+                tension: 0.3,
+                borderWidth: 2,
+                pointRadius: 4
+              },
+              {
+                label: "5-Fold Cross-Validation Loss",
+                data: vLoss,
+                borderColor: "#821E2C",
+                backgroundColor: "transparent",
+                borderDash: [4, 4],
+                tension: 0.3,
+                borderWidth: 2,
+                pointRadius: 4
+              }
+            ]
+          },
+          options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            scales: {
+              x: { title: { display: true, text: "Training Cohort Size", font: { size: 10 } }, ticks: { font: { size: 10 } } },
+              y: { title: { display: true, text: "5-Fold CV Log-Loss", font: { size: 10 } } }
+            },
+            plugins: {
+              legend: { position: "top", labels: { boxWidth: 12, font: { size: 11 } } }
+            }
+          }
+        });
+      }
+    }
+
+    const lossBtns = document.querySelectorAll("#loss-chart-switcher .btn-filter");
+    lossBtns.forEach(btn => {
+      btn.addEventListener("click", () => {
+        lossBtns.forEach(b => b.classList.remove("active"));
+        btn.classList.add("active");
+        lossMode = btn.id === "btn-loss-boosting" ? "boosting" : "samples";
+        renderLossChart();
+      });
+    });
+
+    renderLossChart();
   }
 
   function initExplainability() {
@@ -449,19 +713,19 @@ document.addEventListener("DOMContentLoaded", function () {
     pSelect.addEventListener("change", (e) => loadPatientXai(e.target.value));
 
     document.getElementById("btn-preset-a").addEventListener("click", () => {
-      pSelect.value = "PT-033";
-      loadPatientXai("PT-033");
+      pSelect.value = "PT-250";
+      loadPatientXai("PT-250");
     });
     document.getElementById("btn-preset-b").addEventListener("click", () => {
-      pSelect.value = "PT-049";
-      loadPatientXai("PT-049");
+      pSelect.value = "PT-345";
+      loadPatientXai("PT-345");
     });
     document.getElementById("btn-preset-c").addEventListener("click", () => {
-      pSelect.value = "PT-086";
-      loadPatientXai("PT-086");
+      pSelect.value = "PT-385";
+      loadPatientXai("PT-385");
     });
 
-    loadPatientXai("PT-033");
+    loadPatientXai("PT-250");
   }
 
   function initPatientExplorer() {
@@ -530,7 +794,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
       const badge = document.getElementById("pe-sel-badge");
       badge.textContent = p["Calibrated Outcome"];
-      badge.className = p["Calibrated Outcome"] === "False Negative" ? "badge badge-fn" : (p["Calibrated Outcome"] === "False Positive" ? "badge badge-fp" : "badge badge-tp");
+      badge.className = p["Calibrated Outcome"] === "False Negative" ? "badge badge-fn" : (p["Calibrated Outcome"] === "False Positive" ? "badge badge-fp" : (p["Calibrated Outcome"] === "True Negative" ? "badge badge-tn" : "badge badge-tp"));
 
       const prob = (p["Malignancy Probability"] * 100).toFixed(1);
       document.getElementById("pe-sel-prob").textContent = `${prob}%`;

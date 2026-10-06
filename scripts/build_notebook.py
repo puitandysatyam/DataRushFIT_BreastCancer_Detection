@@ -61,7 +61,7 @@ from IPython.display import display
 
 # Machine Learning Models and Metrics
 from sklearn.datasets import load_breast_cancer
-from sklearn.model_selection import train_test_split, StratifiedKFold, cross_validate
+from sklearn.model_selection import train_test_split, StratifiedKFold, cross_validate, learning_curve
 from sklearn.preprocessing import StandardScaler
 from sklearn.pipeline import Pipeline
 from sklearn.decomposition import PCA
@@ -122,7 +122,44 @@ X_train, X_test, y_train, y_test = train_test_split(
 
 print(f"\\n[Training Set (80%)]: {X_train.shape[0]} samples (Malignant={int(y_train.sum())}, Benign={len(y_train) - int(y_train.sum())})")
 print(f"[Holdout Test Set (20%)]: {X_test.shape[0]} samples (Malignant={int(y_test.sum())}, Benign={len(y_test) - int(y_test.sum())})")
-print(">> Test set locked away in vault. All preprocessing will be fit strictly on training data. <<")""")
+print(">> Test set locked away in vault. All preprocessing will be fit strictly on training data. <<")
+
+# Plot Stratified 80/20 Train-Test Cohort Partitioning
+fig, axes = plt.subplots(1, 2, figsize=(13, 4.5))
+
+# Panel A: Absolute Sample Volumes
+partition_data = pd.DataFrame({
+    'Cohort': ['Training Set (80%)', 'Holdout Vault (20%)'],
+    'Benign': [len(y_train) - int(y_train.sum()), len(y_test) - int(y_test.sum())],
+    'Malignant': [int(y_train.sum()), int(y_test.sum())]
+})
+partition_data.plot(x='Cohort', y=['Benign', 'Malignant'], kind='bar', stacked=True, 
+                    color=['#385E48', '#821E2C'], ax=axes[0], edgecolor='white', linewidth=1.2)
+axes[0].set_title("A. Cohort Partition Volumes (N=569)", weight='bold')
+axes[0].set_ylabel("Patient Biopsy Count")
+axes[0].set_xticklabels(axes[0].get_xticklabels(), rotation=0)
+for p in axes[0].patches:
+    h = p.get_height()
+    if h > 20:
+        axes[0].annotate(f"{int(h)}", (p.get_x() + p.get_width() / 2., p.get_y() + h / 2.),
+                         ha='center', va='center', color='white', fontweight='bold', fontsize=11)
+
+# Panel B: Class Proportion Balance Check
+prop_data = pd.DataFrame({
+    'Benign (%)': [(len(y_train) - int(y_train.sum())) / len(y_train) * 100, (len(y_test) - int(y_test.sum())) / len(y_test) * 100],
+    'Malignant (%)': [int(y_train.sum()) / len(y_train) * 100, int(y_test.sum()) / len(y_test) * 100]
+}, index=['Train (80%)', 'Holdout (20%)'])
+prop_data.plot(kind='bar', color=['#385E48', '#821E2C'], ax=axes[1], edgecolor='white', linewidth=1.2)
+axes[1].set_title("B. Stratified Class Balance Preservation", weight='bold')
+axes[1].set_ylabel("Prevalence (%)")
+axes[1].set_ylim(0, 100)
+axes[1].set_xticklabels(axes[1].get_xticklabels(), rotation=0)
+for p in axes[1].patches:
+    axes[1].annotate(f"{p.get_height():.1f}%", (p.get_x() + p.get_width() / 2., p.get_height() + 2),
+                     ha='center', va='bottom', fontsize=10, fontweight='bold')
+
+plt.tight_layout()
+plt.show()""")
 
     # Cell 4: EDA & Multicollinearity Heatmap
     add_md("""---
@@ -414,6 +451,51 @@ print("Soft-Voting Ensemble 5-Fold Cross-Validation Performance:")
 print(f"  * Mean ROC-AUC: {cv_voting['test_roc_auc'].mean():.4f} +/- {cv_voting['test_roc_auc'].std():.4f}")
 print(f"  * Recall (Malignant Sensitivity): {ens_recall:.4f}")
 print(f"  * F2-Score: {ens_f2:.4f}")""")
+
+    add_code("""# Validation Loss Trajectory and Cross-Validation Learning Curve
+fig, axes = plt.subplots(1, 2, figsize=(14, 4.5))
+
+# Panel A: Boosting Rounds Iterative Log-Loss Convergence
+xgb_eval = xgb.XGBClassifier(n_estimators=60, max_depth=3, learning_rate=0.08, eval_metric='logloss', random_state=RANDOM_STATE)
+scaler_temp = StandardScaler()
+X_tr_sc = scaler_temp.fit_transform(X_train[optimal_features])
+X_te_sc = scaler_temp.transform(X_test[optimal_features])
+xgb_eval.fit(X_tr_sc, y_train, eval_set=[(X_tr_sc, y_train), (X_te_sc, y_test)], verbose=False)
+eval_res = xgb_eval.evals_result()
+
+epochs = range(1, len(eval_res['validation_0']['logloss']) + 1)
+axes[0].plot(epochs, eval_res['validation_0']['logloss'], label='Training Log-Loss', color='#4E6142', linewidth=2.2)
+axes[0].plot(epochs, eval_res['validation_1']['logloss'], label='Holdout Validation Log-Loss', color='#BC522B', linewidth=2.2, linestyle='--')
+axes[0].set_title("A. Iterative Log-Loss Trajectory (Boosting Rounds)", weight='bold')
+axes[0].set_xlabel("Boosting Round (Iteration)")
+axes[0].set_ylabel("Cross-Entropy Loss (Log-Loss)")
+axes[0].legend(loc='upper right')
+axes[0].grid(True, linestyle=':', alpha=0.6)
+
+# Panel B: 5-Fold Cross-Validation Learning Curve (Sample Size Progression)
+train_sizes, train_scores, val_scores = learning_curve(
+    ensemble_model,
+    X_train[optimal_features], y_train,
+    train_sizes=np.linspace(0.2, 1.0, 7),
+    cv=StratifiedKFold(n_splits=5, shuffle=True, random_state=RANDOM_STATE),
+    scoring='neg_log_loss',
+    n_jobs=1
+)
+train_loss_mean = -train_scores.mean(axis=1)
+val_loss_mean = -val_scores.mean(axis=1)
+val_loss_std = val_scores.std(axis=1)
+
+axes[1].plot(train_sizes, train_loss_mean, 'o-', color='#4E6142', label='Training Loss', linewidth=2)
+axes[1].plot(train_sizes, val_loss_mean, 's--', color='#821E2C', label='5-Fold CV Validation Loss', linewidth=2)
+axes[1].fill_between(train_sizes, val_loss_mean - val_loss_std, val_loss_mean + val_loss_std, color='#821E2C', alpha=0.15)
+axes[1].set_title("B. 5-Fold CV Learning Curve (Data Volume Scaling)", weight='bold')
+axes[1].set_xlabel("Training Cohort Size (N)")
+axes[1].set_ylabel("Log-Loss (Lower is Better)")
+axes[1].legend(loc='upper right')
+axes[1].grid(True, linestyle=':', alpha=0.6)
+
+plt.tight_layout()
+plt.show()""")
 
     # Cell 10: The Controlled Dimensionality Reduction Benchmark
     add_md(r"""---
