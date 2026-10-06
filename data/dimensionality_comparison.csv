@@ -1,0 +1,4 @@
+Feature Representation,Dimensionality,Holdout Test ROC-AUC,Holdout Recall (Sensitivity),Holdout Precision,Holdout F2-Score,Holdout Accuracy,Clinical Interpretability
+Full 30 Features,30,0.9954,0.9524,1.0,0.9615,0.9825,"Low (Severe Multicollinearity, 32 redundant pairs)"
+"PCA (6 Components, >90% Variance)",6,0.9964,0.9286,0.975,0.9375,0.9649,Zero (Black-box linear synthetic axes without physical biology)
+Two-Stage Clinical Selection,8,0.9944,0.9286,0.975,0.9375,0.9649,"High (Native cellular cytology: gigantism, notching, texture)"

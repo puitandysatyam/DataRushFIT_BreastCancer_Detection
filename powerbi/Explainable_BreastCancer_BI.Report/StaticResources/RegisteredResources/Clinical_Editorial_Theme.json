@@ -1,0 +1,73 @@
+{
+  "name": "ClinicalEditorialTheme",
+  "dataColors": [
+    "#841B2D",
+    "#556B2F",
+    "#C85A32",
+    "#4A5D4E",
+    "#2D3134",
+    "#8C7A6B",
+    "#B8532F",
+    "#6B7F5E"
+  ],
+  "background": "#FBF9F5",
+  "foreground": "#2D3134",
+  "tableAccent": "#556B2F",
+  "visualStyles": {
+    "*": {
+      "*": {
+        "outspacePane": [
+          {
+            "backgroundColor": { "solid": { "color": "#1E2022" } },
+            "foregroundColor": { "solid": { "color": "#FBF9F5" } }
+          }
+        ],
+        "background": [
+          {
+            "show": true,
+            "color": { "solid": { "color": "#FFFFFF" } },
+            "transparency": 0
+          }
+        ],
+        "border": [
+          {
+            "show": true,
+            "color": { "solid": { "color": "#E5E3DE" } },
+            "radius": 2
+          }
+        ],
+        "dropShadow": [
+          {
+            "show": true,
+            "color": { "solid": { "color": "#E5E3DE" } },
+            "position": "Outer",
+            "preset": "Custom",
+            "shadowBlur": 4,
+            "shadowDistance": 1,
+            "shadowAngle": 90,
+            "transparency": 80
+          }
+        ],
+        "title": [
+          {
+            "show": true,
+            "fontColor": { "solid": { "color": "#1E2022" } },
+            "fontSize": 12,
+            "fontFamily": "Segoe UI Semibold"
+          }
+        ]
+      }
+    },
+    "page": {
+      "*": {
+        "background": [
+          {
+            "color": { "solid": { "color": "#FBF9F5" } },
+            "transparency": 0
+          }
+        ]
+      }
+    }
+  }
+}
+

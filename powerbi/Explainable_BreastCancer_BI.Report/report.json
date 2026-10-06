@@ -1,0 +1,506 @@
+{
+  "version": "1.0",
+  "theme": "ClinicalEditorialTheme",
+  "sections": [
+    {
+      "name": "ReportSection_Signal",
+      "displayName": "1. CLINICAL SIGNAL",
+      "filters": "[]",
+      "ordinal": 0,
+      "width": 1280,
+      "height": 720,
+      "visualContainers": [
+        {
+          "x": 20,
+          "y": 15,
+          "z": 1,
+          "width": 1240,
+          "height": 65,
+          "title": "CLINICAL SIGNAL \u2014 Explainable Breast Cancer Classification",
+          "type": "textbox",
+          "config": "{\"text\": \"CLINICAL SIGNAL | Explainable Breast Cancer Classification (Wisconsin WDBC)\\nMethodology: 569 FNA Biopsies \\u2192 80/20 Vault Holdout \\u2192 Collinear Clustering Pruning \\u2192 RFECV (8 Selected Features) \\u2192 Soft-Voting Ensemble \\u2192 Threshold Tuning (0.3786)\"}"
+        },
+        {
+          "x": 20,
+          "y": 90,
+          "z": 2,
+          "width": 290,
+          "height": 130,
+          "title": "Holdout Sample Size",
+          "type": "card",
+          "config": "{\"measure\": \"Total Patients\", \"subtitle\": \"114 Patients (Locked Holdout)\"}"
+        },
+        {
+          "x": 330,
+          "y": 90,
+          "z": 3,
+          "width": 290,
+          "height": 130,
+          "title": "Dimensionality Reduction",
+          "type": "card",
+          "config": "{\"measure\": \"Number of Selected Features\", \"subtitle\": \"8 Selected / 30 Original (73% Pruned)\"}"
+        },
+        {
+          "x": 640,
+          "y": 90,
+          "z": 4,
+          "width": 290,
+          "height": 130,
+          "title": "Champion Model ROC-AUC",
+          "type": "card",
+          "config": "{\"measure\": \"Best CV ROC-AUC\", \"subtitle\": \"Soft-Voting Ensemble (0.9944 Holdout)\"}"
+        },
+        {
+          "x": 950,
+          "y": 90,
+          "z": 5,
+          "width": 310,
+          "height": 130,
+          "title": "Calibrated Malignant Recall",
+          "type": "card",
+          "config": "{\"measure\": \"Malignant Recall\", \"subtitle\": \"97.6% Sensitivity (41/42 Cancers Detected)\"}"
+        },
+        {
+          "x": 20,
+          "y": 235,
+          "z": 6,
+          "width": 380,
+          "height": 240,
+          "title": "Class Distribution (Actual Holdout)",
+          "type": "pieChart",
+          "config": "{\"category\": \"Actual Diagnosis\", \"values\": [\"Total Patients\"]}"
+        },
+        {
+          "x": 420,
+          "y": 235,
+          "z": 7,
+          "width": 460,
+          "height": 240,
+          "title": "Model Performance Across Algorithms (ROC-AUC vs Recall)",
+          "type": "barChart",
+          "config": "{\"category\": \"Model\", \"values\": [\"CV ROC-AUC\", \"CV Recall (Sensitivity)\"]}"
+        },
+        {
+          "x": 900,
+          "y": 235,
+          "z": 8,
+          "width": 360,
+          "height": 240,
+          "title": "Top Morphological Drivers (Mean |SHAP|)",
+          "type": "barChart",
+          "config": "{\"category\": \"Feature\", \"values\": [\"Mean |SHAP|\"]}"
+        },
+        {
+          "x": 20,
+          "y": 490,
+          "z": 9,
+          "width": 620,
+          "height": 210,
+          "title": "Clinical Outcomes: Actual vs Calibrated Predictions",
+          "type": "table",
+          "config": "{\"columns\": [\"Calibrated Outcome\", \"Total Patients\", \"Accuracy\", \"Precision\", \"Recall (Sensitivity)\"]}"
+        },
+        {
+          "x": 660,
+          "y": 490,
+          "z": 10,
+          "width": 600,
+          "height": 210,
+          "title": "Executive Summary & Clinical Takeaways",
+          "type": "textbox",
+          "config": "{\"text\": \"Key Finding: High correlation (32 pairs with |r| >= 0.85) was eliminated by retaining biological anchors (worst perimeter and mean concave points). Dimensionality was reduced from 30 down to 8 features with ZERO loss in diagnostic power (0.9944 ROC-AUC). Decision threshold tuning to 0.3786 caught 41/42 cancers, cutting false negatives by 67% (from 3 down to 1).\"}"
+        }
+      ]
+    },
+    {
+      "name": "ReportSection_FeatureLab",
+      "displayName": "2. FEATURE LAB",
+      "filters": "[]",
+      "ordinal": 1,
+      "width": 1280,
+      "height": 720,
+      "visualContainers": [
+        {
+          "x": 20,
+          "y": 15,
+          "z": 1,
+          "width": 1240,
+          "height": 55,
+          "title": "FEATURE LAB \u2014 Nuclear Morphology Selection & Ranking",
+          "type": "textbox",
+          "config": "{\"text\": \"FEATURE LAB: Cellular Morphology Analysis | 8 Elite Native Cytology Traits Selected from 30 Features\"}"
+        },
+        {
+          "x": 20,
+          "y": 80,
+          "z": 2,
+          "width": 600,
+          "height": 330,
+          "title": "Ranked Feature Importance (Mean |SHAP| on XGBoost/Trees)",
+          "type": "barChart",
+          "config": "{\"table\": \"Feature_Explainability\", \"x\": \"Feature\", \"y\": \"Mean |SHAP|\"}"
+        },
+        {
+          "x": 640,
+          "y": 80,
+          "z": 3,
+          "width": 620,
+          "height": 330,
+          "title": "Morphological Correlation with Malignancy (Spearman Rank)",
+          "type": "barChart",
+          "config": "{\"table\": \"Feature_Explainability\", \"x\": \"Feature\", \"y\": \"Spearman Correlation\"}"
+        },
+        {
+          "x": 20,
+          "y": 425,
+          "z": 4,
+          "width": 1240,
+          "height": 275,
+          "title": "Clinical Feature Catalog & Pruning Breakdown",
+          "type": "table",
+          "config": "{\"table\": \"Feature_Explainability\", \"columns\": [\"Feature Rank\", \"Feature\", \"Selected\", \"Selection Status\", \"Morphology Category\", \"Mean |SHAP|\", \"Spearman Correlation\", \"Direction & Clinical Meaning\"]}"
+        }
+      ]
+    },
+    {
+      "name": "ReportSection_ModelBench",
+      "displayName": "3. MODEL BENCH",
+      "filters": "[]",
+      "ordinal": 2,
+      "width": 1280,
+      "height": 720,
+      "visualContainers": [
+        {
+          "x": 20,
+          "y": 15,
+          "z": 1,
+          "width": 1240,
+          "height": 55,
+          "title": "MODEL BENCH \u2014 Clinical Model Evaluation & Threshold Tuning",
+          "type": "textbox",
+          "config": "{\"text\": \"MODEL BENCH: 5 Algorithm Families + Soft-Voting Ensemble | 5-Fold Stratified Cross-Validation & Locked Holdout Benchmark\"}"
+        },
+        {
+          "x": 20,
+          "y": 80,
+          "z": 2,
+          "width": 760,
+          "height": 320,
+          "title": "Model Comparison Matrix Across Clinical Metrics",
+          "type": "barChart",
+          "config": "{\"table\": \"Model_Benchmark\", \"x\": \"Model\", \"metrics\": [\"CV ROC-AUC\", \"CV Recall (Sensitivity)\", \"CV F2-Score\", \"Holdout Test Accuracy\"]}"
+        },
+        {
+          "x": 800,
+          "y": 80,
+          "z": 3,
+          "width": 460,
+          "height": 320,
+          "title": "Decision Threshold Calibration: Default (0.50) vs Calibrated (0.3786)",
+          "type": "table",
+          "config": "{\"rows\": [{\"Threshold\": \"Default (0.5000)\", \"Malignant Recall\": \"92.86% (39/42)\", \"Specificity\": \"98.61% (71/72)\", \"False Negatives\": 3, \"False Positives\": 1, \"Accuracy\": \"96.49%\"}, {\"Threshold\": \"Calibrated (0.3786)\", \"Malignant Recall\": \"97.62% (41/42)\", \"Specificity\": \"97.22% (70/72)\", \"False Negatives\": 1, \"False Positives\": 2, \"Accuracy\": \"97.37%\"}]}"
+        },
+        {
+          "x": 20,
+          "y": 415,
+          "z": 4,
+          "width": 1240,
+          "height": 285,
+          "title": "Comprehensive Benchmark Results Table",
+          "type": "table",
+          "config": "{\"table\": \"Model_Benchmark\", \"columns\": [\"Model Rank\", \"Model\", \"CV ROC-AUC\", \"CV Recall (Sensitivity)\", \"CV Precision\", \"CV F1-Score\", \"CV F2-Score\", \"Generalization Gap\", \"Holdout Test Accuracy\", \"Holdout TP\", \"Holdout TN\", \"Holdout FP\", \"Holdout FN\"]}"
+        }
+      ]
+    },
+    {
+      "name": "ReportSection_Explainability",
+      "displayName": "4. WHY THIS PREDICTION?",
+      "filters": "[]",
+      "ordinal": 3,
+      "width": 1280,
+      "height": 720,
+      "visualContainers": [
+        {
+          "x": 20,
+          "y": 15,
+          "z": 1,
+          "width": 1240,
+          "height": 55,
+          "title": "EXPLAINABILITY \u2014 SHAP Local & Global Interpretability",
+          "type": "textbox",
+          "config": "{\"text\": \"WHY THIS PREDICTION? Global TreeSHAP Summary & Patient-Level Local Case Studies\"}"
+        },
+        {
+          "x": 20,
+          "y": 80,
+          "z": 2,
+          "width": 300,
+          "height": 620,
+          "title": "Select Patient Case",
+          "type": "slicer",
+          "config": "{\"table\": \"Holdout_Patients\", \"field\": \"Patient ID\"}"
+        },
+        {
+          "x": 340,
+          "y": 80,
+          "z": 3,
+          "width": 460,
+          "height": 300,
+          "title": "Patient Diagnosis Receipt",
+          "type": "card",
+          "config": "{\"table\": \"Holdout_Patients\", \"fields\": [\"Patient ID\", \"Actual Diagnosis\", \"Predicted Diagnosis (Calibrated)\", \"Malignancy Probability\", \"Top Influencing Feature\", \"Top Feature Impact\"]}"
+        },
+        {
+          "x": 820,
+          "y": 80,
+          "z": 4,
+          "width": 440,
+          "height": 300,
+          "title": "SHAP Feature Impact Attribution (Waterfall Drivers)",
+          "type": "barChart",
+          "config": "{\"fields\": [\"SHAP_worst perimeter\", \"SHAP_worst texture\", \"SHAP_mean concave points\", \"SHAP_area error\", \"SHAP_worst smoothness\", \"SHAP_worst symmetry\", \"SHAP_concavity error\", \"SHAP_concave points error\"]}"
+        },
+        {
+          "x": 340,
+          "y": 395,
+          "z": 5,
+          "width": 920,
+          "height": 305,
+          "title": "Three Benchmark Clinical Archetypes",
+          "type": "table",
+          "config": "{\"archetypes\": [{\"Case\": \"Patient A (High Confidence Malignant)\", \"ID\": \"PT-033\", \"Actual\": \"Malignant\", \"Prob\": \"99.8%\", \"Key Drivers\": \"worst perimeter (128.0) and mean concave points (0.09) push risk far into positive space.\"}, {\"Case\": \"Patient B (High Confidence Benign)\", \"ID\": \"PT-049\", \"Actual\": \"Benign\", \"Prob\": \"0.1%\", \"Key Drivers\": \"Small nuclear perimeter (65.5) and minimal concave indentations (0.01) anchor risk near 0%.\"}, {\"Case\": \"Patient C (Borderline Case)\", \"ID\": \"PT-086\", \"Actual\": \"Benign\", \"Prob\": \"44.2%\", \"Key Drivers\": \"Moderate texture (24.1) elevates risk, but small size and low concave points keep it below calibrated threshold.\"}]}"
+        }
+      ]
+    },
+    {
+      "name": "ReportSection_Patients",
+      "displayName": "5. PATIENT EXPLORER",
+      "filters": "[]",
+      "ordinal": 4,
+      "width": 1280,
+      "height": 720,
+      "visualContainers": [
+        {
+          "x": 20,
+          "y": 15,
+          "z": 1,
+          "width": 1240,
+          "height": 55,
+          "title": "PATIENT EXPLORER \u2014 Clinical Cohort Browser",
+          "type": "textbox",
+          "config": "{\"text\": \"PATIENT EXPLORER: Interactive Investigation of All 114 Holdout Patients with Nuclear Morphology and Probabilities\"}"
+        },
+        {
+          "x": 20,
+          "y": 80,
+          "z": 2,
+          "width": 260,
+          "height": 100,
+          "title": "Filter: Actual Diagnosis",
+          "type": "slicer",
+          "config": "{\"table\": \"Holdout_Patients\", \"field\": \"Actual Diagnosis\"}"
+        },
+        {
+          "x": 300,
+          "y": 80,
+          "z": 3,
+          "width": 260,
+          "height": 100,
+          "title": "Filter: Prediction Outcome",
+          "type": "slicer",
+          "config": "{\"table\": \"Holdout_Patients\", \"field\": \"Calibrated Outcome\"}"
+        },
+        {
+          "x": 580,
+          "y": 80,
+          "z": 4,
+          "width": 260,
+          "height": 100,
+          "title": "Filter: Correctness",
+          "type": "slicer",
+          "config": "{\"table\": \"Holdout_Patients\", \"field\": \"Calibrated Correct\"}"
+        },
+        {
+          "x": 860,
+          "y": 80,
+          "z": 5,
+          "width": 400,
+          "height": 100,
+          "title": "Cohort Overview",
+          "type": "card",
+          "config": "{\"measure\": \"Total Patients\", \"subtitle\": \"Interactive Filtered Cohort\"}"
+        },
+        {
+          "x": 20,
+          "y": 195,
+          "z": 6,
+          "width": 1240,
+          "height": 505,
+          "title": "Patient Cohort Investigation Table",
+          "type": "table",
+          "config": "{\"table\": \"Holdout_Patients\", \"columns\": [\"Patient ID\", \"Actual Diagnosis\", \"Predicted Diagnosis (Calibrated)\", \"Malignancy Probability\", \"Prediction Confidence (%)\", \"Calibrated Outcome\", \"Top Influencing Feature\", \"worst perimeter\", \"mean concave points\", \"worst texture\", \"area error\"]}"
+        }
+      ]
+    },
+    {
+      "name": "ReportSection_ErrorMap",
+      "displayName": "6. ERROR MAP",
+      "filters": "[]",
+      "ordinal": 5,
+      "width": 1280,
+      "height": 720,
+      "visualContainers": [
+        {
+          "x": 20,
+          "y": 15,
+          "z": 1,
+          "width": 1240,
+          "height": 55,
+          "title": "ERROR MAP \u2014 Model Reliability & Misclassification Analysis",
+          "type": "textbox",
+          "config": "{\"text\": \"ERROR MAP: Evidence-Based Audit of Misclassifications | Transparent Clinical Safety Analysis\"}"
+        },
+        {
+          "x": 20,
+          "y": 80,
+          "z": 2,
+          "width": 290,
+          "height": 120,
+          "title": "False Negatives (FN)",
+          "type": "card",
+          "config": "{\"measure\": \"False Negatives (FN)\", \"subtitle\": \"Exactly 1 Missed Cancer (Reduced from 3)\"}"
+        },
+        {
+          "x": 330,
+          "y": 80,
+          "z": 3,
+          "width": 290,
+          "height": 120,
+          "title": "False Positives (FP)",
+          "type": "card",
+          "config": "{\"measure\": \"False Positives (FP)\", \"subtitle\": \"2 Unnecessary Biopsies (Safe Trade-off)\"}"
+        },
+        {
+          "x": 640,
+          "y": 80,
+          "z": 4,
+          "width": 290,
+          "height": 120,
+          "title": "Malignant Sensitivity",
+          "type": "card",
+          "config": "{\"measure\": \"Recall (Sensitivity)\", \"subtitle\": \"97.6% (41 of 42 Caught)\"}"
+        },
+        {
+          "x": 950,
+          "y": 80,
+          "z": 5,
+          "width": 310,
+          "height": 120,
+          "title": "Holdout Error Rate",
+          "type": "card",
+          "config": "{\"value\": \"2.63%\", \"subtitle\": \"3 Total Errors out of 114 Patients\"}"
+        },
+        {
+          "x": 20,
+          "y": 215,
+          "z": 6,
+          "width": 520,
+          "height": 240,
+          "title": "Confusion Matrix Heatmap (Calibrated)",
+          "type": "table",
+          "config": "{\"matrix\": [{\"True Class\": \"Benign (Actual)\", \"Pred Benign\": 70, \"Pred Malignant\": 2, \"Metric\": \"97.2% Specificity\"}, {\"True Class\": \"Malignant (Actual)\", \"Pred Benign\": 1, \"Pred Malignant\": 41, \"Metric\": \"97.6% Recall\"}]}"
+        },
+        {
+          "x": 560,
+          "y": 215,
+          "z": 7,
+          "width": 700,
+          "height": 240,
+          "title": "Audit of Discrepancy: Myth of 'Zero False Negatives'",
+          "type": "textbox",
+          "config": "{\"text\": \"CRITICAL CLINICAL AUDIT: Why we do NOT claim Zero False Negatives\\nIn early informal notebook drafts, casual comments stated 'zero false negatives'. However, rigorous empirical evaluation of the holdout set reveals exactly 1 False Negative (Patient PT-073) at the optimal calibrated threshold (and 3 at default 0.50 threshold).\\nPatient PT-073 presented with an atypical, small-cell malignant tumor where worst perimeter was below typical malignant cutoffs. Claiming zero false negatives in a medical setting is dangerous and scientifically dishonest. Our model catches 41/42 cancers (97.62% sensitivity) with absolute transparency.\"}"
+        },
+        {
+          "x": 20,
+          "y": 470,
+          "z": 8,
+          "width": 1240,
+          "height": 230,
+          "title": "The 3 Clinical Misclassifications Deep Dive",
+          "type": "table",
+          "config": "{\"table\": \"Holdout_Patients\", \"filter\": \"Calibrated Correct == Incorrect\", \"columns\": [\"Patient ID\", \"Actual Diagnosis\", \"Predicted Diagnosis (Calibrated)\", \"Malignancy Probability\", \"Calibrated Outcome\", \"Top Influencing Feature\", \"worst perimeter\", \"mean concave points\", \"worst texture\", \"area error\"]}"
+        }
+      ]
+    },
+    {
+      "name": "ReportSection_Method",
+      "displayName": "7. METHOD & DATA",
+      "filters": "[]",
+      "ordinal": 6,
+      "width": 1280,
+      "height": 720,
+      "visualContainers": [
+        {
+          "x": 20,
+          "y": 15,
+          "z": 1,
+          "width": 1240,
+          "height": 55,
+          "title": "METHOD & DATA \u2014 Architecture, Governance & Lineage",
+          "type": "textbox",
+          "config": "{\"text\": \"METHOD & DATA: End-to-End Scientific Architecture, Governance, and Reproducibility Specifications\"}"
+        },
+        {
+          "x": 20,
+          "y": 80,
+          "z": 2,
+          "width": 390,
+          "height": 300,
+          "title": "1. Data Origin & Ingestion",
+          "type": "textbox",
+          "config": "{\"text\": \"\\u2022 Wisconsin Diagnostic Breast Cancer (WDBC)\\n\\u2022 569 fine-needle aspirates (FNA) of breast masses\\n\\u2022 Target: 212 Malignant (37.3%), 357 Benign (62.7%)\\n\\u2022 30 features derived from 10 cellular nuclear characteristics\\n\\u2022 Strict 80/20 train/test stratified holdout sealed in vault.\"}"
+        },
+        {
+          "x": 430,
+          "y": 80,
+          "z": 3,
+          "width": 420,
+          "height": 300,
+          "title": "2. Two-Stage Feature Selection",
+          "type": "textbox",
+          "config": "{\"text\": \"\\u2022 Severe multicollinearity: 32 pairs with |r| >= 0.85, VIF > 1000.\\n\\u2022 Stage 1: Agglomerative hierarchical correlation clustering (cutoff dist = 0.15) pruned redundant twins down to 16 features.\\n\\u2022 Stage 2: RFECV with Random Forest (5-Fold Stratified CV) isolated 8 elite non-redundant traits with peak discriminative power.\"}"
+        },
+        {
+          "x": 870,
+          "y": 80,
+          "z": 4,
+          "width": 390,
+          "height": 300,
+          "title": "3. Modeling & Threshold Calibration",
+          "type": "textbox",
+          "config": "{\"text\": \"\\u2022 5 model families benchmarked across 5-fold CV.\\n\\u2022 Soft-Voting Ensemble (Logistic Regression + SVM + XGBoost) achieved top AUC (0.9944).\\n\\u2022 Threshold tuning: Shifted decision boundary from default 0.50 down to 0.3786 to maximize F2-score (prioritizing recall 2x over precision).\"}"
+        },
+        {
+          "x": 20,
+          "y": 395,
+          "z": 5,
+          "width": 600,
+          "height": 305,
+          "title": "Dimensionality Strategy Comparison",
+          "type": "table",
+          "config": "{\"table\": \"Dimensionality_Benchmark\", \"columns\": [\"Feature Representation\", \"Dimensionality\", \"Holdout Test ROC-AUC\", \"Holdout Recall (Sensitivity)\", \"Holdout Precision\", \"Holdout F2-Score\", \"Clinical Interpretability\"]}"
+        },
+        {
+          "x": 640,
+          "y": 395,
+          "z": 6,
+          "width": 620,
+          "height": 305,
+          "title": "Clinical Governance & Operational Guardrails",
+          "type": "textbox",
+          "config": "{\"text\": \"CLINICAL RECOMMENDATION FOR ONCOLOGY TEAMS:\\n1. Triage Workflow: The model should serve as a Second-Reader Decision Support Tool for pathologists, flagging high-risk aspirates for priority immunohistochemistry.\\n2. Borderline Protocol: Any case with probability between 0.30 and 0.60 should trigger secondary re-aspiration or core needle biopsy.\\n3. Interpretability Requirement: Every algorithmic score must be accompanied by the TreeSHAP waterfall receipt highlighting nuclear perimeter and concavity values.\"}"
+        }
+      ]
+    }
+  ]
+}

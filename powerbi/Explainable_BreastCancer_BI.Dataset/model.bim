@@ -1,0 +1,685 @@
+{
+  "name": "Explainable_BreastCancer_BI",
+  "compatibilityLevel": 1550,
+  "model": {
+    "culture": "en-US",
+    "dataAccessOptions": {
+      "legacyRedirects": true,
+      "returnErrorValuesAsNull": true
+    },
+    "defaultPowerBIDataSourceVersion": "powerBI_V3",
+    "tables": [
+      {
+        "name": "Holdout_Patients",
+        "columns": [
+          {
+            "name": "Patient ID",
+            "dataType": "string",
+            "sourceColumn": "Patient ID",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "Row Index",
+            "dataType": "int64",
+            "sourceColumn": "Row Index",
+            "summarizeBy": "sum"
+          },
+          {
+            "name": "Dataset Index",
+            "dataType": "int64",
+            "sourceColumn": "Dataset Index",
+            "summarizeBy": "sum"
+          },
+          {
+            "name": "Actual Diagnosis",
+            "dataType": "string",
+            "sourceColumn": "Actual Diagnosis",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "Actual Target",
+            "dataType": "int64",
+            "sourceColumn": "Actual Target",
+            "summarizeBy": "sum"
+          },
+          {
+            "name": "Predicted Diagnosis (Default 0.50)",
+            "dataType": "string",
+            "sourceColumn": "Predicted Diagnosis (Default 0.50)",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "Predicted Target (Default 0.50)",
+            "dataType": "int64",
+            "sourceColumn": "Predicted Target (Default 0.50)",
+            "summarizeBy": "sum"
+          },
+          {
+            "name": "Default Correct",
+            "dataType": "string",
+            "sourceColumn": "Default Correct",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "Default Outcome",
+            "dataType": "string",
+            "sourceColumn": "Default Outcome",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "Predicted Diagnosis (Calibrated)",
+            "dataType": "string",
+            "sourceColumn": "Predicted Diagnosis (Calibrated)",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "Predicted Target (Calibrated)",
+            "dataType": "int64",
+            "sourceColumn": "Predicted Target (Calibrated)",
+            "summarizeBy": "sum"
+          },
+          {
+            "name": "Calibrated Correct",
+            "dataType": "string",
+            "sourceColumn": "Calibrated Correct",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "Calibrated Outcome",
+            "dataType": "string",
+            "sourceColumn": "Calibrated Outcome",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "Malignancy Probability",
+            "dataType": "double",
+            "sourceColumn": "Malignancy Probability",
+            "summarizeBy": "sum"
+          },
+          {
+            "name": "Prediction Confidence (%)",
+            "dataType": "double",
+            "sourceColumn": "Prediction Confidence (%)",
+            "summarizeBy": "sum"
+          },
+          {
+            "name": "Confidence Margin",
+            "dataType": "double",
+            "sourceColumn": "Confidence Margin",
+            "summarizeBy": "sum"
+          },
+          {
+            "name": "Top Influencing Feature",
+            "dataType": "string",
+            "sourceColumn": "Top Influencing Feature",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "Top Feature Impact",
+            "dataType": "string",
+            "sourceColumn": "Top Feature Impact",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "Base Value (SHAP Base)",
+            "dataType": "double",
+            "sourceColumn": "Base Value (SHAP Base)",
+            "summarizeBy": "sum"
+          },
+          {
+            "name": "worst texture",
+            "dataType": "double",
+            "sourceColumn": "worst texture",
+            "summarizeBy": "sum"
+          },
+          {
+            "name": "SHAP_worst texture",
+            "dataType": "double",
+            "sourceColumn": "SHAP_worst texture",
+            "summarizeBy": "sum"
+          },
+          {
+            "name": "mean concave points",
+            "dataType": "double",
+            "sourceColumn": "mean concave points",
+            "summarizeBy": "sum"
+          },
+          {
+            "name": "SHAP_mean concave points",
+            "dataType": "double",
+            "sourceColumn": "SHAP_mean concave points",
+            "summarizeBy": "sum"
+          },
+          {
+            "name": "concavity error",
+            "dataType": "double",
+            "sourceColumn": "concavity error",
+            "summarizeBy": "sum"
+          },
+          {
+            "name": "SHAP_concavity error",
+            "dataType": "double",
+            "sourceColumn": "SHAP_concavity error",
+            "summarizeBy": "sum"
+          },
+          {
+            "name": "concave points error",
+            "dataType": "double",
+            "sourceColumn": "concave points error",
+            "summarizeBy": "sum"
+          },
+          {
+            "name": "SHAP_concave points error",
+            "dataType": "double",
+            "sourceColumn": "SHAP_concave points error",
+            "summarizeBy": "sum"
+          },
+          {
+            "name": "worst perimeter",
+            "dataType": "double",
+            "sourceColumn": "worst perimeter",
+            "summarizeBy": "sum"
+          },
+          {
+            "name": "SHAP_worst perimeter",
+            "dataType": "double",
+            "sourceColumn": "SHAP_worst perimeter",
+            "summarizeBy": "sum"
+          },
+          {
+            "name": "area error",
+            "dataType": "double",
+            "sourceColumn": "area error",
+            "summarizeBy": "sum"
+          },
+          {
+            "name": "SHAP_area error",
+            "dataType": "double",
+            "sourceColumn": "SHAP_area error",
+            "summarizeBy": "sum"
+          },
+          {
+            "name": "worst symmetry",
+            "dataType": "double",
+            "sourceColumn": "worst symmetry",
+            "summarizeBy": "sum"
+          },
+          {
+            "name": "SHAP_worst symmetry",
+            "dataType": "double",
+            "sourceColumn": "SHAP_worst symmetry",
+            "summarizeBy": "sum"
+          },
+          {
+            "name": "worst smoothness",
+            "dataType": "double",
+            "sourceColumn": "worst smoothness",
+            "summarizeBy": "sum"
+          },
+          {
+            "name": "SHAP_worst smoothness",
+            "dataType": "double",
+            "sourceColumn": "SHAP_worst smoothness",
+            "summarizeBy": "sum"
+          }
+        ],
+        "partitions": [
+          {
+            "name": "Holdout_Patients-Partition",
+            "mode": "import",
+            "source": {
+              "type": "m",
+              "expression": [
+                "let Source = Csv.Document(File.Contents(\"D:/DataRushFIT_BreastCancer_Detection/holdout_patient_table.csv\"), [Delimiter=\",\", Columns=35, Encoding=65001, QuoteStyle=QuoteStyle.None]),",
+                "#\"Promoted Headers\" = Table.PromoteHeaders(Source, [PromoteAllScalars=true])",
+                "in #\"Promoted Headers\""
+              ]
+            }
+          }
+        ]
+      },
+      {
+        "name": "Model_Benchmark",
+        "columns": [
+          {
+            "name": "Model",
+            "dataType": "string",
+            "sourceColumn": "Model",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "CV ROC-AUC",
+            "dataType": "double",
+            "sourceColumn": "CV ROC-AUC",
+            "summarizeBy": "sum"
+          },
+          {
+            "name": "CV ROC-AUC Std",
+            "dataType": "double",
+            "sourceColumn": "CV ROC-AUC Std",
+            "summarizeBy": "sum"
+          },
+          {
+            "name": "CV Recall (Sensitivity)",
+            "dataType": "double",
+            "sourceColumn": "CV Recall (Sensitivity)",
+            "summarizeBy": "sum"
+          },
+          {
+            "name": "CV Precision",
+            "dataType": "double",
+            "sourceColumn": "CV Precision",
+            "summarizeBy": "sum"
+          },
+          {
+            "name": "CV F1-Score",
+            "dataType": "double",
+            "sourceColumn": "CV F1-Score",
+            "summarizeBy": "sum"
+          },
+          {
+            "name": "CV F2-Score",
+            "dataType": "double",
+            "sourceColumn": "CV F2-Score",
+            "summarizeBy": "sum"
+          },
+          {
+            "name": "CV Accuracy",
+            "dataType": "double",
+            "sourceColumn": "CV Accuracy",
+            "summarizeBy": "sum"
+          },
+          {
+            "name": "Train ROC-AUC",
+            "dataType": "double",
+            "sourceColumn": "Train ROC-AUC",
+            "summarizeBy": "sum"
+          },
+          {
+            "name": "Generalization Gap",
+            "dataType": "double",
+            "sourceColumn": "Generalization Gap",
+            "summarizeBy": "sum"
+          },
+          {
+            "name": "Holdout Test Accuracy",
+            "dataType": "double",
+            "sourceColumn": "Holdout Test Accuracy",
+            "summarizeBy": "sum"
+          },
+          {
+            "name": "Holdout Test Precision",
+            "dataType": "double",
+            "sourceColumn": "Holdout Test Precision",
+            "summarizeBy": "sum"
+          },
+          {
+            "name": "Holdout Test Recall",
+            "dataType": "double",
+            "sourceColumn": "Holdout Test Recall",
+            "summarizeBy": "sum"
+          },
+          {
+            "name": "Holdout Test Specificity",
+            "dataType": "double",
+            "sourceColumn": "Holdout Test Specificity",
+            "summarizeBy": "sum"
+          },
+          {
+            "name": "Holdout Test F1-Score",
+            "dataType": "double",
+            "sourceColumn": "Holdout Test F1-Score",
+            "summarizeBy": "sum"
+          },
+          {
+            "name": "Holdout Test F2-Score",
+            "dataType": "double",
+            "sourceColumn": "Holdout Test F2-Score",
+            "summarizeBy": "sum"
+          },
+          {
+            "name": "Holdout Test ROC-AUC",
+            "dataType": "double",
+            "sourceColumn": "Holdout Test ROC-AUC",
+            "summarizeBy": "sum"
+          },
+          {
+            "name": "Holdout TP",
+            "dataType": "int64",
+            "sourceColumn": "Holdout TP",
+            "summarizeBy": "sum"
+          },
+          {
+            "name": "Holdout TN",
+            "dataType": "int64",
+            "sourceColumn": "Holdout TN",
+            "summarizeBy": "sum"
+          },
+          {
+            "name": "Holdout FP",
+            "dataType": "int64",
+            "sourceColumn": "Holdout FP",
+            "summarizeBy": "sum"
+          },
+          {
+            "name": "Holdout FN",
+            "dataType": "int64",
+            "sourceColumn": "Holdout FN",
+            "summarizeBy": "sum"
+          },
+          {
+            "name": "Model Rank",
+            "dataType": "int64",
+            "sourceColumn": "Model Rank",
+            "summarizeBy": "sum"
+          }
+        ],
+        "partitions": [
+          {
+            "name": "Model_Benchmark-Partition",
+            "mode": "import",
+            "source": {
+              "type": "m",
+              "expression": [
+                "let Source = Csv.Document(File.Contents(\"D:/DataRushFIT_BreastCancer_Detection/model_benchmark.csv\"), [Delimiter=\",\", Columns=22, Encoding=65001, QuoteStyle=QuoteStyle.None]),",
+                "#\"Promoted Headers\" = Table.PromoteHeaders(Source, [PromoteAllScalars=true])",
+                "in #\"Promoted Headers\""
+              ]
+            }
+          }
+        ]
+      },
+      {
+        "name": "Dimensionality_Benchmark",
+        "columns": [
+          {
+            "name": "Feature Representation",
+            "dataType": "string",
+            "sourceColumn": "Feature Representation",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "Dimensionality",
+            "dataType": "int64",
+            "sourceColumn": "Dimensionality",
+            "summarizeBy": "sum"
+          },
+          {
+            "name": "Holdout Test ROC-AUC",
+            "dataType": "double",
+            "sourceColumn": "Holdout Test ROC-AUC",
+            "summarizeBy": "sum"
+          },
+          {
+            "name": "Holdout Recall (Sensitivity)",
+            "dataType": "double",
+            "sourceColumn": "Holdout Recall (Sensitivity)",
+            "summarizeBy": "sum"
+          },
+          {
+            "name": "Holdout Precision",
+            "dataType": "double",
+            "sourceColumn": "Holdout Precision",
+            "summarizeBy": "sum"
+          },
+          {
+            "name": "Holdout F2-Score",
+            "dataType": "double",
+            "sourceColumn": "Holdout F2-Score",
+            "summarizeBy": "sum"
+          },
+          {
+            "name": "Holdout Accuracy",
+            "dataType": "double",
+            "sourceColumn": "Holdout Accuracy",
+            "summarizeBy": "sum"
+          },
+          {
+            "name": "Clinical Interpretability",
+            "dataType": "string",
+            "sourceColumn": "Clinical Interpretability",
+            "summarizeBy": "none"
+          }
+        ],
+        "partitions": [
+          {
+            "name": "Dimensionality_Benchmark-Partition",
+            "mode": "import",
+            "source": {
+              "type": "m",
+              "expression": [
+                "let Source = Csv.Document(File.Contents(\"D:/DataRushFIT_BreastCancer_Detection/dimensionality_comparison.csv\"), [Delimiter=\",\", Columns=8, Encoding=65001, QuoteStyle=QuoteStyle.None]),",
+                "#\"Promoted Headers\" = Table.PromoteHeaders(Source, [PromoteAllScalars=true])",
+                "in #\"Promoted Headers\""
+              ]
+            }
+          }
+        ]
+      },
+      {
+        "name": "Feature_Explainability",
+        "columns": [
+          {
+            "name": "Feature",
+            "dataType": "string",
+            "sourceColumn": "Feature",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "Selected",
+            "dataType": "int64",
+            "sourceColumn": "Selected",
+            "summarizeBy": "sum"
+          },
+          {
+            "name": "Selection Status",
+            "dataType": "string",
+            "sourceColumn": "Selection Status",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "Mean |SHAP|",
+            "dataType": "double",
+            "sourceColumn": "Mean |SHAP|",
+            "summarizeBy": "sum"
+          },
+          {
+            "name": "Spearman Correlation",
+            "dataType": "double",
+            "sourceColumn": "Spearman Correlation",
+            "summarizeBy": "sum"
+          },
+          {
+            "name": "Morphology Category",
+            "dataType": "string",
+            "sourceColumn": "Morphology Category",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "Direction & Clinical Meaning",
+            "dataType": "string",
+            "sourceColumn": "Direction & Clinical Meaning",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "Feature Rank",
+            "dataType": "int64",
+            "sourceColumn": "Feature Rank",
+            "summarizeBy": "sum"
+          }
+        ],
+        "partitions": [
+          {
+            "name": "Feature_Explainability-Partition",
+            "mode": "import",
+            "source": {
+              "type": "m",
+              "expression": [
+                "let Source = Csv.Document(File.Contents(\"D:/DataRushFIT_BreastCancer_Detection/selected_feature_xai_ranking.csv\"), [Delimiter=\",\", Columns=8, Encoding=65001, QuoteStyle=QuoteStyle.None]),",
+                "#\"Promoted Headers\" = Table.PromoteHeaders(Source, [PromoteAllScalars=true])",
+                "in #\"Promoted Headers\""
+              ]
+            }
+          }
+        ]
+      },
+      {
+        "name": "_Clinical_Measures",
+        "columns": [
+          {
+            "name": "Measure_Placeholder",
+            "dataType": "string",
+            "sourceColumn": "Measure_Placeholder",
+            "isHidden": true
+          }
+        ],
+        "measures": [
+          {
+            "name": "Total Patients",
+            "expression": "COUNTROWS('Holdout_Patients')",
+            "formatString": "#,0"
+          },
+          {
+            "name": "Benign Count",
+            "expression": "CALCULATE(COUNTROWS('Holdout_Patients'), 'Holdout_Patients'[Actual Diagnosis] = \"Benign\")",
+            "formatString": "#,0"
+          },
+          {
+            "name": "Malignant Count",
+            "expression": "CALCULATE(COUNTROWS('Holdout_Patients'), 'Holdout_Patients'[Actual Diagnosis] = \"Malignant\")",
+            "formatString": "#,0"
+          },
+          {
+            "name": "Predicted Benign Count",
+            "expression": "CALCULATE(COUNTROWS('Holdout_Patients'), 'Holdout_Patients'[Predicted Diagnosis (Calibrated)] = \"Benign\")",
+            "formatString": "#,0"
+          },
+          {
+            "name": "Predicted Malignant Count",
+            "expression": "CALCULATE(COUNTROWS('Holdout_Patients'), 'Holdout_Patients'[Predicted Diagnosis (Calibrated)] = \"Malignant\")",
+            "formatString": "#,0"
+          },
+          {
+            "name": "Correct Predictions",
+            "expression": "CALCULATE(COUNTROWS('Holdout_Patients'), 'Holdout_Patients'[Calibrated Correct] = \"Correct\")",
+            "formatString": "#,0"
+          },
+          {
+            "name": "Incorrect Predictions",
+            "expression": "CALCULATE(COUNTROWS('Holdout_Patients'), 'Holdout_Patients'[Calibrated Correct] = \"Incorrect\")",
+            "formatString": "#,0"
+          },
+          {
+            "name": "True Positives (TP)",
+            "expression": "CALCULATE(COUNTROWS('Holdout_Patients'), 'Holdout_Patients'[Calibrated Outcome] = \"True Positive\")",
+            "formatString": "#,0"
+          },
+          {
+            "name": "True Negatives (TN)",
+            "expression": "CALCULATE(COUNTROWS('Holdout_Patients'), 'Holdout_Patients'[Calibrated Outcome] = \"True Negative\")",
+            "formatString": "#,0"
+          },
+          {
+            "name": "False Positives (FP)",
+            "expression": "CALCULATE(COUNTROWS('Holdout_Patients'), 'Holdout_Patients'[Calibrated Outcome] = \"False Positive\")",
+            "formatString": "#,0"
+          },
+          {
+            "name": "False Negatives (FN)",
+            "expression": "CALCULATE(COUNTROWS('Holdout_Patients'), 'Holdout_Patients'[Calibrated Outcome] = \"False Negative\")",
+            "formatString": "#,0"
+          },
+          {
+            "name": "Accuracy",
+            "expression": "DIVIDE([True Positives (TP)] + [True Negatives (TN)], [Total Patients], 0)",
+            "formatString": "0.0%"
+          },
+          {
+            "name": "Precision",
+            "expression": "DIVIDE([True Positives (TP)], [True Positives (TP)] + [False Positives (FP)], 0)",
+            "formatString": "0.0%"
+          },
+          {
+            "name": "Recall (Sensitivity)",
+            "expression": "DIVIDE([True Positives (TP)], [True Positives (TP)] + [False Negatives (FN)], 0)",
+            "formatString": "0.0%"
+          },
+          {
+            "name": "Malignant Recall",
+            "expression": "[Recall (Sensitivity)]",
+            "formatString": "0.0%"
+          },
+          {
+            "name": "Specificity",
+            "expression": "DIVIDE([True Negatives (TN)], [True Negatives (TN)] + [False Positives (FP)], 0)",
+            "formatString": "0.0%"
+          },
+          {
+            "name": "F1 Score",
+            "expression": "DIVIDE(2 * [Precision] * [Recall (Sensitivity)], [Precision] + [Recall (Sensitivity)], 0)",
+            "formatString": "0.000"
+          },
+          {
+            "name": "F2 Score",
+            "expression": "DIVIDE(5 * [Precision] * [Recall (Sensitivity)], 4 * [Precision] + [Recall (Sensitivity)], 0)",
+            "formatString": "0.000"
+          },
+          {
+            "name": "Mean Prediction Confidence",
+            "expression": "AVERAGE('Holdout_Patients'[Prediction Confidence (%)])",
+            "formatString": "0.0\"%\""
+          },
+          {
+            "name": "Mean Malignancy Probability",
+            "expression": "AVERAGE('Holdout_Patients'[Malignancy Probability])",
+            "formatString": "0.000"
+          },
+          {
+            "name": "Number of Selected Features",
+            "expression": "CALCULATE(COUNTROWS('Feature_Explainability'), 'Feature_Explainability'[Selected] = 1)",
+            "formatString": "#,0"
+          },
+          {
+            "name": "Total Evaluated Features",
+            "expression": "COUNTROWS('Feature_Explainability')",
+            "formatString": "#,0"
+          },
+          {
+            "name": "Best Model Name",
+            "expression": "CALCULATE(FIRSTNONBLANK('Model_Benchmark'[Model], 1), 'Model_Benchmark'[Model Rank] = 1)",
+            "formatString": ""
+          },
+          {
+            "name": "Best CV ROC-AUC",
+            "expression": "CALCULATE(MAX('Model_Benchmark'[CV ROC-AUC]), 'Model_Benchmark'[Model Rank] = 1)",
+            "formatString": "0.000"
+          },
+          {
+            "name": "Calibrated Medical Threshold",
+            "expression": "0.3786",
+            "formatString": "0.0000"
+          },
+          {
+            "name": "Default Decision Threshold",
+            "expression": "0.5000",
+            "formatString": "0.0000"
+          }
+        ],
+        "partitions": [
+          {
+            "name": "_Clinical_Measures-Partition",
+            "mode": "import",
+            "source": {
+              "type": "m",
+              "expression": [
+                "let Source = #table(type table [Measure_Placeholder = text], {{\"Measures\"}})",
+                "in Source"
+              ]
+            }
+          }
+        ]
+      }
+    ],
+    "relationships": []
+  }
+}
